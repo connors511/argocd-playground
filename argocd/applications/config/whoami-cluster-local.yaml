@@ -1,4 +1,5 @@
 whoami:
+  replicaCount: 4
   ingress:
     enabled: true
     annotations:
