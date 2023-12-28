@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: whoami
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: local
+            url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: 'whoami-{{cluster}}'
+    spec:
+      project: devops
+      source:
+        repoURL: https://github.com/connors511/argocd-playground.git
+        targetRevision: HEAD
+        path: argocd/applications/charts/whoami
+        helm:
+          valueFiles:
+            - ../../config/whoami-cluster-{{cluster}}.yaml
+      destination:
+        server: '{{url}}'
+        namespace: whoami
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 2
+          backoff:
+            duration: "5s"
+            factor: 2
+            maxDuration: "3m0s"
