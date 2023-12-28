@@ -6,7 +6,7 @@ whoami:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     hosts:
-      - host: argocd.cbx.local
+      - host: whoami.cbx.local
         paths:
           - "/"
     pathType: Prefix
