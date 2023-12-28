@@ -3,4 +3,5 @@ kubeconfig
 *.tfstate*
 *.tfvars
 .idea
-argocd/**/charts
+argocd/install/**/charts
+argocd/applications/charts/**/charts
